@@ -1,9 +1,10 @@
 <template>
-  <router-view></router-view>
+  <div>Cashier</div>
 </template>
 
 <script>
 export default {
-  name: "app"
+  name: "cashier",
+  components: {}
 };
 </script>
