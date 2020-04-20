@@ -3,6 +3,9 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 import "./plugins/element.js";
+import SmoothScrollbar from "vue-smooth-scrollbar";
+
+Vue.use(SmoothScrollbar);
 
 Vue.config.productionTip = false;
 
