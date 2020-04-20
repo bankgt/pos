@@ -1,12 +1,12 @@
 <template>
-  <div class="pos-layout" v-loading="loading">
-    <div class="pos-layout__main">
+  <div class="pos-cashier-layout" v-loading="loading">
+    <div class="pos-cashier-layout__main">
       <Products />
     </div>
-    <div class="pos-layout__sidebar">
+    <div class="pos-cashier-layout__sidebar">
       <Cart />
     </div>
-    <ModalProcessOrder />
+    <ModalProcessOrder :visible="dialogVisible" />
   </div>
 </template>
 
@@ -19,14 +19,15 @@ export default {
   components: { Products, Cart, ModalProcessOrder },
   data() {
     return {
-      loading: false
+      loading: false,
+      dialogVisible: false
     };
   }
 };
 </script>
 
 <style lang="scss">
-@include block("layout") {
+@include block("cashier-layout") {
   background-color: #fff;
   width: 982px;
   min-width: 982px;

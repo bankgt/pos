@@ -2,21 +2,22 @@
   <el-dialog
     title="Process Order"
     width="600px"
-    :visible.sync="dialogVisible"
     :show-close="false"
     :close-on-click-modal="false"
+    :visible.sync="visible"
   >
     <el-steps
       :space="200"
-      :active="2"
+      :active="3"
       finish-status="success"
       align-center
       class="mb-4 justify-content-center"
     >
-      <el-step title="Add Cart" :icon="false"></el-step>
+      <el-step title="Add Cart" :icon="null"></el-step>
       <!-- <el-step title="Payment" icon="el-icon-money"></el-step> -->
-      <el-step title="Payment" :icon="false"></el-step>
-      <el-step title="Clearing" icon="el-icon-document-checked"></el-step>
+      <el-step title="Payment" :icon="null"></el-step>
+      <el-step title="Clearing" :icon="null"></el-step>
+      <!-- <el-step title="Clearing" icon="el-icon-document-checked"></el-step> -->
     </el-steps>
 
     <div class="position-relative">
@@ -24,10 +25,10 @@
         <div>Price Total :</div>
         <div class="ml-auto">฿600</div>
       </div>
-      <ProcessOrderPayment v-if="!dialogVisible" />
+      <ProcessOrderPayment v-if="!visible" />
       <ProcessOrderClearing />
       <transition name="el-fade-in">
-        <SuccessCheckmark v-if="dialogVisible" />
+        <SuccessCheckmark v-if="visible" />
       </transition>
     </div>
   </el-dialog>
@@ -41,10 +42,9 @@ export default {
   name: "ModalProcessOrder",
   components: { ProcessOrderPayment, ProcessOrderClearing, SuccessCheckmark },
   data() {
-    return {
-      dialogVisible: false
-    };
-  }
+    return {};
+  },
+  props: ["visible"]
 };
 </script>
 

@@ -1,22 +1,20 @@
 <template>
   <div class="pos-cart">
-    <div class="d-flex align-items-center p-3 mb-1">
-      <el-badge :value="12" class="pos-cart__counter" type="primary">
-        <h2 class="pos-cart__title">Cart</h2>
-      </el-badge>
-      <div class="ml-auto">
+    <Title class="p-3 mb-1">
+      Cart
+      <template v-slot:right>
         <el-button type="text" size="mini">Clear All</el-button>
-      </div>
-    </div>
+      </template>
+    </Title>
 
-    <!-- <div class="pos-cart__empty mx-3">
+    <div class="pos-cart__empty mx-3">
       <i class="el-icon-receiving"></i>
       <span>
         Cart is empty.
       </span>
-    </div> -->
+    </div>
 
-    <smooth-scrollbar class="pos-cart__products px-3">
+    <!-- <smooth-scrollbar class="pos-cart__products px-3">
       <CartItem />
       <div class="pos-cart__divider"></div>
       <CartItem />
@@ -26,23 +24,24 @@
       <CartItem />
       <div class="pos-cart__divider"></div>
       <CartItem />
-    </smooth-scrollbar>
+    </smooth-scrollbar> -->
 
     <div class="pos-cart__action p-3 pt-4">
-      <div class="pos-cart__total mb-2">
+      <!-- <div class="pos-cart__total mb-2">
         <div>Price Total :</div>
         <div class="ml-auto">฿600</div>
-      </div>
+      </div> -->
       <el-button type="primary" class="mt-auto w-100">PROCESS ORDER</el-button>
     </div>
   </div>
 </template>
 
 <script>
-import CartItem from "@/components/CartItem";
+// import CartItem from "@/components/CartItem";
+import Title from "@/components/Title";
 export default {
   name: "Cart",
-  components: { CartItem }
+  components: { Title }
 };
 </script>
 
@@ -52,19 +51,6 @@ export default {
   flex: 1 1 auto;
   display: flex;
   flex-direction: column;
-  @include element("title") {
-    color: #fff;
-    margin: 0;
-  }
-  @include element("counter") {
-    .el-badge__content {
-      color: #fff;
-      top: 17px;
-      right: -8px;
-      border: 0;
-      font-weight: 600;
-    }
-  }
   @include element("divider") {
     height: 1px;
     background-color: rgba(255, 255, 255, 0.1);
