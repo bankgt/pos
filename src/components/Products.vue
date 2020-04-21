@@ -1,37 +1,46 @@
 <template>
   <div class="pos-products">
     <div class="p-4">
-      <InputSearch />
+      <InputSearch
+        :value="textSearch"
+        @input="search($event)"
+        :result-count="data.length"
+      />
     </div>
     <smooth-scrollbar class="pos-products__list px-4 mb-3">
       <div class="pos-products__grid">
-        <Product />
-        <Product />
-        <Product />
-        <Product />
-        <Product />
-        <Product />
-        <Product />
-        <Product />
-        <Product />
-        <Product />
-        <Product />
-        <Product />
+        <Product
+          v-for="item in data"
+          :key="item.id"
+          :data="item"
+          @click="select({ value: !item._isSelected, data: item })"
+        />
       </div>
     </smooth-scrollbar>
   </div>
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex";
 import InputSearch from "@/components/InputSearch";
 import Product from "@/components/Product";
 export default {
   name: "Products",
   components: { InputSearch, Product },
-  data() {
-    return {
-      textSearch: ""
-    };
+  computed: {
+    ...mapGetters(["textSearch"])
+  },
+  props: {
+    data: {
+      type: Array,
+      required: true
+    }
+  },
+  methods: {
+    ...mapActions({
+      search: "searchProducts",
+      select: "setSelectProduct"
+    })
   }
 };
 </script>

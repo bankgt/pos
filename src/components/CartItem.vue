@@ -1,54 +1,61 @@
 <template>
   <div class="pos-cart-item">
     <div class="d-flex">
-      <div>
-        <el-image
-          class="pos-cart-item__image mr-3"
-          src="
-          https://d1w7fb2mkkr3kw.cloudfront.net/assets/images/book/mid/9781/4088/9781408855652.jpg
-        "
-          fit="cover"
-        >
+      <div class="mr-3">
+        <el-image class="pos-cart-item__image " :src="data.cover" fit="cover">
           <div slot="error">
             <i class="el-icon-picture-outline"></i>
           </div>
         </el-image>
       </div>
-      <div class="d-flex flex-column">
+      <div class="d-flex flex-column w-100">
         <div class="position-relative">
           <el-button
             class="pos-cart-item__btn-delete"
             type="danger"
-            icon="el-icon-delete"
+            icon="el-icon-close"
             size="mini"
             title="Remove"
+            @click="remove"
           ></el-button>
-          <small class="pos-cart-item__code mb-2 pt-1">#9781408855706</small>
+          <small class="pos-cart-item__code mb-2 pt-1">#{{ data.id }}</small>
           <div class="pos-cart-item__name">
-            Harry Potter and the Philosopher's Stone (I)
+            {{ data.title }}
           </div>
-          <div class="pos-cart-item__price">฿250</div>
+          <div class="pos-cart-item__price">{{ data.price | price }}</div>
         </div>
         <div class="d-flex align-items-center mt-auto">
-          <InputQty />
-          <div class="pos-cart-item__total is-discount ml-auto">
-            <small class="pos-cart-item__discount">฿250</small>
-            ฿350
+          <InputQty
+            :value="data._qty"
+            @input="setQty({ value: $event, data })"
+          />
+          <div class="pos-cart-item__total ml-auto">
+            {{ data._total | price }}
           </div>
         </div>
       </div>
     </div>
-    <small class="pos-cart-item__remark"
-      >&#8226; buy 2 unique series books discount 10%</small
-    >
   </div>
 </template>
 
 <script>
+import { mapActions } from "vuex";
 import InputQty from "@/components/InputQty";
 export default {
   name: "CartItem",
-  components: { InputQty }
+  components: { InputQty },
+  props: {
+    data: {
+      type: Object,
+      required: true
+    }
+  },
+  methods: {
+    ...mapActions(["setSelectProduct", "setQty"]),
+    remove() {
+      this.setSelectProduct({ value: false, data: this.data });
+    }
+  }
 };
 </script>
 
@@ -81,23 +88,7 @@ export default {
   @include element("total") {
     text-align: right;
     font-size: 14px;
-    @include when("discount") {
-      color: $--color-primary;
-    }
-  }
-  @include element("discount") {
-    color: #fff;
-    text-decoration: line-through;
-    font-size: 11px;
-    display: block;
-    line-height: 10px;
-    margin-top: 4px;
-  }
-  @include element("remark") {
-    font-size: 12px;
-    opacity: 0.6;
-    display: block;
-    margin-top: 4px;
+    line-height: 16px;
   }
   @include element("btn-delete") {
     position: absolute;

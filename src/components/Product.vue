@@ -1,17 +1,11 @@
 <template>
   <div
     class="pos-product"
-    :class="{ 'is-active': isActive }"
-    @click="isActive = !isActive"
+    :class="{ 'is-active': data._isSelected }"
+    @click="$emit('click')"
   >
     <div class="pos-product__image-container">
-      <el-image
-        class="pos-product__image"
-        src="
-            https://d1w7fb2mkkr3kw.cloudfront.net/assets/images/book/mid/9781/4088/9781408855652.jpg
-          "
-        fit="cover"
-      >
+      <el-image class="pos-product__image" :src="data.cover" fit="cover">
         <div slot="error">
           <i class="el-icon-picture-outline"></i>
         </div>
@@ -21,23 +15,22 @@
         <i class="el-icon-success"></i>
       </div>
     </div>
-    <div class="pos-product__code mt-2">
-      #9781408855706
-    </div>
+    <div class="pos-product__code mt-2">#{{ data.id }}</div>
     <div class="pos-product__name mb-2">
-      Harry Potter and the Philosopher's Stone (I)
+      {{ data.title }}
     </div>
-    <div class="pos-product__price">฿270</div>
+    <div class="pos-product__price">{{ data.price | price }}</div>
   </div>
 </template>
 
 <script>
 export default {
   name: "Product",
-  data() {
-    return {
-      isActive: false
-    };
+  props: {
+    data: {
+      type: Object,
+      required: true
+    }
   }
 };
 </script>

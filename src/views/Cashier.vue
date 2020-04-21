@@ -1,16 +1,17 @@
 <template>
   <div class="pos-cashier-layout" v-loading="loading">
     <div class="pos-cashier-layout__main">
-      <Products />
+      <Products :data="products" />
     </div>
     <div class="pos-cashier-layout__sidebar">
       <Cart />
     </div>
-    <ModalProcessOrder :visible="dialogVisible" />
+    <ModalProcessOrder :visible="isVisibleModal" />
   </div>
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex";
 import Products from "@/components/Products";
 import Cart from "@/components/Cart";
 import ModalProcessOrder from "@/components/ModalProcessOrder";
@@ -19,9 +20,22 @@ export default {
   components: { Products, Cart, ModalProcessOrder },
   data() {
     return {
-      loading: false,
-      dialogVisible: false
+      isVisibleModal: false
     };
+  },
+  computed: {
+    ...mapGetters({
+      loading: "loadingProducts",
+      products: "products"
+    })
+  },
+  created() {
+    // this.getProducts();
+  },
+  methods: {
+    ...mapActions({
+      getProducts: "getProducts"
+    })
   }
 };
 </script>

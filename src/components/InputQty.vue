@@ -2,14 +2,17 @@
   <el-input-number
     class="pos-input-qty"
     size="mini"
-    v-model="num4"
+    :min="1"
+    :max="99"
+    :value="value"
+    @change="val => $emit('input', val)"
   ></el-input-number>
 </template>
 
 <script>
 export default {
   name: "InputQty",
-  components: {}
+  props: ["value"]
 };
 </script>
 

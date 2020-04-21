@@ -43,6 +43,7 @@ export default {
       right: -8px;
       border: 0;
       font-weight: 600;
+      min-width: 18px;
     }
   }
 }

@@ -3,14 +3,20 @@
     <el-input
       class="pos-search__search"
       placeholder="Search Books"
-      v-model="textSearch"
+      :value="value"
+      @input="$emit('input', $event)"
     >
       <i slot="prefix" class="el-input__icon el-icon-search"></i>
     </el-input>
-    <div class="pos-search__right">
-      <div class="pos-search__result">Result 0 Item(s)</div>
+    <div class="pos-search__right" v-if="value">
+      <div class="pos-search__result">Result {{ resultCount }} Item(s)</div>
       <div class="pos-search__btn-clear">
-        <el-button size="mini" icon="el-icon-close" title="Clear"></el-button>
+        <el-button
+          size="mini"
+          icon="el-icon-close"
+          title="Clear"
+          @click="$emit('input', '')"
+        ></el-button>
       </div>
     </div>
   </div>
@@ -19,10 +25,15 @@
 <script>
 export default {
   name: "InputSearch",
-  data() {
-    return {
-      textSearch: ""
-    };
+  props: {
+    value: {
+      type: String,
+      required: true
+    },
+    resultCount: {
+      type: Number,
+      default: 0
+    }
   }
 };
 </script>
