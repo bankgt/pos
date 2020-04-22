@@ -323,7 +323,9 @@ export default new Vuex.Store({
     products: state => {
       return state.products.filter(
         i =>
-          i.title.toLocaleLowerCase().includes(state.textSearch) ||
+          i.title
+            .toLocaleLowerCase()
+            .includes(state.textSearch.toLocaleLowerCase()) ||
           i.id.includes(state.textSearch)
       );
     },
