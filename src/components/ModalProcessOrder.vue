@@ -95,7 +95,7 @@ export default {
       this.setProcessOrder({ status: ORDER_STATUS.SUCCESS }).then(() => {
         setTimeout(() => {
           this.setProcessOrder(null);
-        }, 1000);
+        }, 1500);
       });
     }
   }
