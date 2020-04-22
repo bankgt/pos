@@ -3,7 +3,7 @@
     title=""
     :show-close="false"
     :close-on-click-modal="false"
-    :visible.sync="dialogVisible"
+    :visible="visible"
     width="500px"
   >
     <div class="pos-customer-thankyou">
@@ -20,10 +20,11 @@ import Checkmark from "@/components/Checkmark";
 export default {
   name: "ModalThankyou",
   components: { Checkmark },
-  data() {
-    return {
-      dialogVisible: false
-    };
+  props: {
+    visible: {
+      type: Boolean,
+      required: true
+    }
   }
 };
 </script>

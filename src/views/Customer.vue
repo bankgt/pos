@@ -1,9 +1,9 @@
 <template>
   <div class="pos-customer">
-    <Title class="p-4 mb-1" :badge="0">Your Order</Title>
+    <Title class="p-4 mb-1" :badge="count">Your Order</Title>
 
-    <div class="px-4">
-      <el-table class="pos-customer__table" :data="tableData" height="510px">
+    <div class="px-4" v-if="order">
+      <el-table class="pos-customer__table" :data="products" height="415px">
         <el-table-column
           prop="cover"
           label="Image"
@@ -37,101 +37,80 @@
           width="100"
           header-align="center"
           align="center"
-        ></el-table-column>
+        >
+          <template slot-scope="scope">{{ scope.row.price | price }}</template>
+        </el-table-column>
         <el-table-column
-          prop="qty"
+          prop="_qty"
           label="Qty"
           width="100"
           header-align="center"
           align="center"
         ></el-table-column>
         <el-table-column
-          prop="discount"
-          label="Discount"
-          width="100"
-          header-align="center"
-          align="center"
-        ></el-table-column>
-        <el-table-column
-          prop="total"
+          prop="_total"
           label="Total"
           width="100"
           header-align="center"
           align="center"
-        ></el-table-column>
+          ><template slot-scope="scope">{{
+            scope.row._total | price
+          }}</template></el-table-column
+        >
       </el-table>
     </div>
 
-    <div class="px-4 d-flex flex-column align-items-end mt-auto">
-      <div class="pos-customer__total my-4">
-        <div>Total :</div>
-        <div class="ml-auto">฿600</div>
-      </div>
-    </div>
-
-    <!-- <div class="pos-customer__empty px-4">
+    <div class="pos-customer__empty px-4" v-else>
       <div>
         <i class="el-icon-s-shop"></i>
         <span>
           Welcome
         </span>
       </div>
-    </div> -->
-    <ModalThankyou />
+    </div>
+
+    <div class="p-4 d-flex flex-column align-items-end" v-if="order">
+      <div class="pos-customer__total pos-customer__total--light">
+        <div>Subtotal :</div>
+        <div class="ml-auto">{{ order.summary.subtotal | price }}</div>
+      </div>
+      <div class="pos-customer__total pos-customer__total--light my-2">
+        <div>Discount :</div>
+        <div class="ml-auto">{{ order.summary.discount | price }}</div>
+      </div>
+      <div class="pos-customer__total">
+        <div>Total :</div>
+        <div class="ml-auto">{{ order.summary.total | price }}</div>
+      </div>
+    </div>
+    <ModalThankyou :visible="visibleModalThankyou" />
   </div>
 </template>
 
 <script>
+import { ORDER_STATUS } from "@/store";
+import { mapGetters, mapActions } from "vuex";
 import ModalThankyou from "@/components/ModalThankyou";
 import Title from "@/components/Title";
 export default {
   name: "Customer",
   components: { Title, ModalThankyou },
-  data() {
-    return {
-      tableData: [
-        {
-          cover:
-            "https://d1w7fb2mkkr3kw.cloudfront.net/assets/images/book/mid/9781/4088/9781408855652.jpg",
-          price: "฿350",
-          total: "฿350",
-          discount: "฿100",
-          title: "Harry Potter and the Philosopher's Stone (I)",
-          id: "9781408855652",
-          qty: 1
-        },
-        {
-          cover:
-            "https://d1w7fb2mkkr3kw.cloudfront.net/assets/images/book/mid/9781/4088/9781408855676.jpg",
-          price: "฿350",
-          total: "฿350",
-          discount: null,
-          title: "Harry Potter and the Philosopher's Stone (I)",
-          id: "9781408855652",
-          qty: 1
-        },
-        {
-          cover:
-            "https://d1w7fb2mkkr3kw.cloudfront.net/assets/images/book/mid/9781/4088/9781408855676.jpg",
-          price: "฿350",
-          total: "฿350",
-          discount: null,
-          title: "Harry Potter and the Philosopher's Stone (I)",
-          id: "9781408855652",
-          qty: 1
-        },
-        {
-          cover:
-            "https://d1w7fb2mkkr3kw.cloudfront.net/assets/images/book/mid/9781/4088/9781408855676.jpg",
-          price: "฿350",
-          total: "฿350",
-          discount: null,
-          title: "Harry Potter and the Philosopher's Stone (I)",
-          id: "9781408855652",
-          qty: 1
-        }
-      ]
-    };
+  computed: {
+    ...mapGetters({
+      order: "order"
+    }),
+    products: vm => (vm.order ? vm.order.cartProducts : []),
+    count: vm => (vm.order ? vm.order.cartProducts.length : 0),
+    visibleModalThankyou: vm =>
+      vm.order ? vm.order.status == ORDER_STATUS.SUCCESS : false
+  },
+  created() {
+    this.syncProcessOrder();
+  },
+  methods: {
+    ...mapActions({
+      syncProcessOrder: "syncProcessOrder"
+    })
   }
 };
 </script>
@@ -195,7 +174,7 @@ export default {
       }
       th {
         border: none;
-        background-color: #52535a;
+        background-color: rgba(#000, 0.4);
       }
     }
     tbody {
@@ -224,13 +203,16 @@ export default {
     border-radius: 4px;
   }
   @include element("total") {
-    width: 250px;
+    width: 300px;
     background-color: #52535a;
     display: flex;
     color: #fff;
-    padding: 11px 16px;
+    padding: 11px 24px;
     border-radius: 4px;
     font-size: 14px;
+    @include modifier("light") {
+      background-color: rgba(#000, 0.4);
+    }
   }
 }
 </style>

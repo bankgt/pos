@@ -39,11 +39,15 @@ export default {
   @include element("counter") {
     .el-badge__content {
       color: #fff;
-      top: 17px;
+      top: 16px;
       right: -8px;
       border: 0;
       font-weight: 600;
-      min-width: 18px;
+      min-width: 24px;
+      font-size: 17px;
+      height: 24px;
+      line-height: 24px;
+      border-radius: 24px;
     }
   }
 }
