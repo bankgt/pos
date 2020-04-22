@@ -4,9 +4,9 @@
       <Products :data="products" />
     </div>
     <div class="pos-cashier-layout__sidebar">
-      <Cart />
+      <Cart @processOrder="setProcessOrder()" />
     </div>
-    <ModalProcessOrder :visible="isVisibleModal" />
+    <ModalProcessOrder />
   </div>
 </template>
 
@@ -18,11 +18,6 @@ import ModalProcessOrder from "@/components/ModalProcessOrder";
 export default {
   name: "Cashier",
   components: { Products, Cart, ModalProcessOrder },
-  data() {
-    return {
-      isVisibleModal: false
-    };
-  },
   computed: {
     ...mapGetters({
       loading: "loadingProducts",
@@ -31,10 +26,13 @@ export default {
   },
   created() {
     // this.getProducts();
+    this.syncProcessOrder();
   },
   methods: {
     ...mapActions({
-      getProducts: "getProducts"
+      getProducts: "getProducts",
+      syncProcessOrder: "syncProcessOrder",
+      setProcessOrder: "setProcessOrder"
     })
   }
 };

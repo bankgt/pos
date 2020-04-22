@@ -2,9 +2,10 @@ import Vue from "vue";
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
-import "./plugins/element.js";
 import SmoothScrollbar from "vue-smooth-scrollbar";
 import numeral from "numeral";
+import "./plugins/element.js";
+import "./plugins/firebase.js";
 
 Vue.use(SmoothScrollbar);
 

@@ -10,7 +10,7 @@
         <el-input
           class="pos-order-clearing__input"
           type="text"
-          v-model.number="form.money"
+          v-model="getMoney"
           autocomplete="off"
           disabled
         ></el-input>
@@ -19,7 +19,7 @@
         <el-input
           class="pos-order-clearing__input"
           type="text"
-          v-model.number="form.change"
+          v-model="change"
           autocomplete="off"
           readonly
         ></el-input>
@@ -27,8 +27,8 @@
     </el-form>
 
     <span class="d-flex justify-content-end mt-5">
-      <el-button>Back</el-button>
-      <el-button type="primary">Finish</el-button>
+      <el-button @click="$emit('cancel')">Back</el-button>
+      <el-button @click="$emit('submit')" type="primary">Finish</el-button>
     </span>
   </div>
 </template>
@@ -38,11 +38,22 @@ export default {
   name: "ProcessOrderClearing",
   data() {
     return {
-      form: {
-        money: "฿1,000",
-        change: "฿400"
-      }
+      form: null
     };
+  },
+  computed: {
+    getMoney: vm => vm.$options.filters.price(vm.money),
+    change: vm => vm.$options.filters.price(vm.money - vm.summary.total)
+  },
+  props: {
+    money: {
+      type: Number,
+      required: true
+    },
+    summary: {
+      type: Object,
+      required: true
+    }
   }
 };
 </script>

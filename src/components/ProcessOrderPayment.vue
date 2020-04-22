@@ -2,19 +2,13 @@
   <div class="pos-payment">
     <el-form
       :model="form"
+      :rules="rules"
       ref="form"
       label-width="100px"
       class="d-flex align-items-end flex-column"
+      @submit.native.prevent="submitForm"
     >
-      <el-form-item
-        class="m-0"
-        label="Get Money"
-        prop="money"
-        :rules="[
-          { required: true, message: 'Money is required' },
-          { type: 'number', message: 'Money must be a number' }
-        ]"
-      >
+      <el-form-item class="m-0" label="Get Money" prop="money">
         <el-input
           class="pos-payment__input"
           type="text"
@@ -26,8 +20,8 @@
     </el-form>
 
     <span class="d-flex justify-content-end mt-5">
-      <el-button @click="dialogVisible = false">Cancel</el-button>
-      <el-button type="primary">Confirm</el-button>
+      <el-button @click="$emit('cancel')">Cancel</el-button>
+      <el-button type="primary" @click="submitForm">Confirm</el-button>
     </span>
   </div>
 </template>
@@ -36,20 +30,48 @@
 export default {
   name: "ProcessOrderPayment",
   data() {
+    const validatorMoneyValue = (rule, value, callback) => {
+      if (value < this.summary.total) {
+        callback(
+          new Error("Money must be greater than or equal to the total price.")
+        );
+      } else {
+        callback();
+      }
+    };
     return {
       form: {
-        money: 1000
+        money: null
+      },
+      rules: {
+        money: [
+          { required: true, message: "Money is required" },
+          { type: "number", message: "Money must be a number" },
+          { validator: validatorMoneyValue, trigger: "blur" }
+        ]
       }
     };
   },
+  props: {
+    money: {
+      type: Number,
+      required: true
+    },
+    summary: {
+      type: Object,
+      required: true
+    }
+  },
+  created() {
+    if (this.money) {
+      this.form.money = this.money;
+    }
+  },
   methods: {
-    submitForm(formName) {
-      this.$refs[formName].validate(valid => {
+    submitForm() {
+      this.$refs.form.validate(valid => {
         if (valid) {
-          alert("submit!");
-        } else {
-          console.log("error submit!!");
-          return false;
+          this.$emit("submit", this.form);
         }
       });
     }

@@ -40,6 +40,12 @@ const DISCOUNT_CONDITION = [
   }
 ];
 
+export const ORDER_STATUS = {
+  PAYMENT: "payment",
+  CLEARING: "clearing",
+  SUCCESS: "success"
+};
+
 export default new Vuex.Store({
   state: {
     textSearch: "",
@@ -249,7 +255,8 @@ export default new Vuex.Store({
         title: "The Confidence Project",
         id: "9781473634176"
       }
-    ]
+    ],
+    order: null
   },
   mutations: {
     textSearch(state, value) {
@@ -263,6 +270,9 @@ export default new Vuex.Store({
     },
     product(state, { index, data }) {
       state.products.splice(index, 1, { ...data });
+    },
+    order(state, data) {
+      state.order = data;
     }
   },
   actions: {
@@ -311,16 +321,42 @@ export default new Vuex.Store({
       const index = context.state.products.findIndex(i => i.id == data.id);
       data._qty = value;
       context.commit("product", { index, data });
+    },
+    syncProcessOrder(context) {
+      this._vm.$db.ref("order").on("value", snapshot => {
+        context.commit("order", snapshot.val());
+      });
+    },
+    setProcessOrder({ dispatch, getters, state }, payload) {
+      if (payload === null) {
+        if (state.order && state.order.status == ORDER_STATUS.SUCCESS) {
+          dispatch("clearAllSelectProduct");
+        }
+        return this._vm.$db.ref("order").remove();
+      } else {
+        const status =
+          payload && payload.state ? payload.state : ORDER_STATUS.PAYMENT;
+        return this._vm.$db.ref("order").set({
+          summary: getters.summary,
+          cartProducts: getters.cartProducts,
+          ...state.order,
+          status,
+          ...payload
+        });
+      }
     }
   },
   getters: {
-    textSearch: state => {
+    order(state) {
+      return state.order;
+    },
+    textSearch(state) {
       return state.textSearch;
     },
-    loadingProducts: state => {
+    loadingProducts(state) {
       return state.loadingProducts;
     },
-    products: state => {
+    products(state) {
       return state.products.filter(
         i =>
           i.title
@@ -329,7 +365,7 @@ export default new Vuex.Store({
           i.id.includes(state.textSearch)
       );
     },
-    cartProducts: state => {
+    cartProducts(state) {
       return state.products
         .filter(i => i._isSelected)
         .sort((a, b) => b._selectedTime - a._selectedTime)

@@ -40,7 +40,11 @@
           <div class="ml-auto">{{ summary.total | price }}</div>
         </div>
       </div>
-      <el-button type="primary" class="mt-auto w-100" :disabled="!hasProducts"
+      <el-button
+        type="primary"
+        class="mt-auto w-100"
+        :disabled="!hasProducts"
+        @click="$emit('processOrder')"
         >PROCESS ORDER</el-button
       >
     </div>
