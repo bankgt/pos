@@ -26,7 +26,7 @@ body {
   background-color: #e5e9ec !important;
 }
 body {
-  padding: 20px;
+  padding: 80px;
   margin: 0;
   font-family: "Quicksand", sans-serif;
   font-weight: 500;
