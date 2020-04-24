@@ -10,7 +10,7 @@
     >
       <el-form-item class="m-0" label="Get Money" prop="money">
         <el-input
-          class="pos-payment__input"
+          class="pos-payment__input id-input-money"
           type="text"
           v-model.number="form.money"
           autocomplete="off"
@@ -20,8 +20,12 @@
     </el-form>
 
     <span class="d-flex justify-content-end mt-5">
-      <el-button @click="$emit('cancel')">Cancel</el-button>
-      <el-button type="primary" @click="submitForm">Confirm</el-button>
+      <el-button class="id-button-cancel" @click="$emit('cancel')"
+        >Cancel</el-button
+      >
+      <el-button class="id-button-submit" type="primary" @click="submitForm"
+        >Confirm</el-button
+      >
     </span>
   </div>
 </template>

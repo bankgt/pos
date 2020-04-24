@@ -1,6 +1,6 @@
 <template>
   <div
-    class="pos-product"
+    class="pos-product id-product"
     :class="{ 'is-active': data._isSelected }"
     @click="$emit('click')"
   >
@@ -15,11 +15,13 @@
         <i class="el-icon-success"></i>
       </div>
     </div>
-    <div class="pos-product__code mt-2">#{{ data.id }}</div>
-    <div class="pos-product__name mb-2">
+    <div class="pos-product__code mt-2 id-product-code">#{{ data.id }}</div>
+    <div class="pos-product__name mb-2 id-product-name">
       {{ data.title }}
     </div>
-    <div class="pos-product__price">{{ data.price | price }}</div>
+    <div class="pos-product__price id-product-price">
+      {{ data.price | price }}
+    </div>
   </div>
 </template>
 

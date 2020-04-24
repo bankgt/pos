@@ -25,15 +25,11 @@ export default {
     })
   },
   created() {
-    // this.getProducts();
+    this.getProducts();
     this.syncProcessOrder();
   },
   methods: {
-    ...mapActions({
-      getProducts: "getProducts",
-      syncProcessOrder: "syncProcessOrder",
-      setProcessOrder: "setProcessOrder"
-    })
+    ...mapActions(["getProducts", "syncProcessOrder", "setProcessOrder"])
   }
 };
 </script>

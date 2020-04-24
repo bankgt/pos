@@ -11,25 +11,29 @@
       <div class="d-flex flex-column w-100">
         <div class="position-relative">
           <el-button
-            class="pos-cart-item__btn-delete"
+            class="pos-cart-item__btn-close id-button-close"
             type="danger"
             icon="el-icon-close"
             size="mini"
             title="Remove"
             @click="remove"
           ></el-button>
-          <small class="pos-cart-item__code mb-2 pt-1">#{{ data.id }}</small>
-          <div class="pos-cart-item__name">
+          <small class="pos-cart-item__code mb-2 pt-1 id-product-code"
+            >#{{ data.id }}</small
+          >
+          <div class="pos-cart-item__name id-product-name">
             {{ data.title }}
           </div>
-          <div class="pos-cart-item__price">{{ data.price | price }}</div>
+          <div class="pos-cart-item__price id-product-price">
+            {{ data.price | price }}
+          </div>
         </div>
         <div class="d-flex align-items-center mt-auto">
           <InputQty
             :value="data._qty"
             @input="setQty({ value: $event, data })"
           />
-          <div class="pos-cart-item__total ml-auto">
+          <div class="pos-cart-item__total ml-auto id-product-total">
             {{ data._total | price }}
           </div>
         </div>
@@ -90,7 +94,7 @@ export default {
     font-size: 14px;
     line-height: 16px;
   }
-  @include element("btn-delete") {
+  @include element("btn-close") {
     position: absolute;
     right: 0;
     top: 0;

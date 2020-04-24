@@ -3,7 +3,7 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 import SmoothScrollbar from "vue-smooth-scrollbar";
-import numeral from "numeral";
+import price from "@/filters/price";
 import "./plugins/element.js";
 import "./plugins/firebase.js";
 
@@ -11,11 +11,7 @@ Vue.use(SmoothScrollbar);
 
 Vue.config.productionTip = false;
 
-Vue.filter("price", value => {
-  return numeral(value)
-    .format("$0,0")
-    .replace("$", "฿");
-});
+Vue.filter("price", price);
 
 new Vue({
   router,

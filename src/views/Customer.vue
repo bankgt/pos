@@ -60,7 +60,7 @@
       </el-table>
     </div>
 
-    <div class="pos-customer__empty px-4" v-else>
+    <div class="pos-customer__empty px-4 id-welcome-message" v-else>
       <div>
         <i class="el-icon-s-shop"></i>
         <span>
@@ -72,15 +72,21 @@
     <div class="p-4 d-flex flex-column align-items-end" v-if="order">
       <div class="pos-customer__total pos-customer__total--light">
         <div>Subtotal :</div>
-        <div class="ml-auto">{{ order.summary.subtotal | price }}</div>
+        <div class="ml-auto id-summary-subtotal">
+          {{ order.summary.subtotal | price }}
+        </div>
       </div>
       <div class="pos-customer__total pos-customer__total--light my-2">
         <div>Discount :</div>
-        <div class="ml-auto">{{ order.summary.discount | price }}</div>
+        <div class="ml-auto id-summary-discount">
+          {{ order.summary.discount | price }}
+        </div>
       </div>
       <div class="pos-customer__total">
         <div>Total :</div>
-        <div class="ml-auto">{{ order.summary.total | price }}</div>
+        <div class="ml-auto id-summary-total">
+          {{ order.summary.total | price }}
+        </div>
       </div>
     </div>
     <ModalThankyou :visible="visibleModalThankyou" />
@@ -88,7 +94,7 @@
 </template>
 
 <script>
-import { ORDER_STATUS } from "@/store";
+import { ORDER_STATUS } from "@/store/constants";
 import { mapGetters, mapActions } from "vuex";
 import ModalThankyou from "@/components/ModalThankyou";
 import Title from "@/components/Title";
@@ -108,9 +114,7 @@ export default {
     this.syncProcessOrder();
   },
   methods: {
-    ...mapActions({
-      syncProcessOrder: "syncProcessOrder"
-    })
+    ...mapActions(["syncProcessOrder"])
   }
 };
 </script>

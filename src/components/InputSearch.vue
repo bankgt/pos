@@ -9,9 +9,12 @@
       <i slot="prefix" class="el-input__icon el-icon-search"></i>
     </el-input>
     <div class="pos-search__right" v-if="value">
-      <div class="pos-search__result">Result {{ resultCount }} Item(s)</div>
+      <div class="pos-search__result" id="id-search-result-count">
+        Result {{ resultCount }} Item(s)
+      </div>
       <div class="pos-search__btn-clear">
         <el-button
+          id="id-button-clear-search"
           size="mini"
           icon="el-icon-close"
           title="Clear"

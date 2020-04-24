@@ -6,9 +6,9 @@
       type="primary"
       v-if="showBadge"
     >
-      <h2 class="pos-title__title"><slot></slot></h2>
+      <h2 class="pos-title__title id-title-text"><slot></slot></h2>
     </el-badge>
-    <h2 class="pos-title__title" v-else><slot></slot></h2>
+    <h2 class="pos-title__title id-title-text" v-else><slot></slot></h2>
     <div class="ml-auto" v-if="$slots.right">
       <slot name="right"></slot>
     </div>
@@ -17,6 +17,7 @@
 
 <script>
 export default {
+  name: "Title",
   props: {
     showBadge: {
       type: Boolean,

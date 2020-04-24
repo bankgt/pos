@@ -28,7 +28,9 @@
     <div class="position-relative">
       <div class="pos-order-total mb-4">
         <div>Price Total :</div>
-        <div class="ml-auto">{{ summary.total | price }}</div>
+        <div class="ml-auto" id="id-total-price">
+          {{ summary.total | price }}
+        </div>
       </div>
       <ProcessOrderPayment
         v-if="step == 1"
@@ -56,7 +58,7 @@ import { mapGetters, mapActions } from "vuex";
 import ProcessOrderPayment from "@/components/ProcessOrderPayment";
 import ProcessOrderClearing from "@/components/ProcessOrderClearing";
 import SuccessCheckmark from "@/components/SuccessCheckmark";
-import { ORDER_STATUS } from "@/store";
+import { ORDER_STATUS } from "@/store/constants";
 export default {
   name: "ModalProcessOrder",
   components: { ProcessOrderPayment, ProcessOrderClearing, SuccessCheckmark },

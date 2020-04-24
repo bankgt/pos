@@ -3,20 +3,24 @@
     <Title class="p-3 mb-1" :badge="products.length">
       Cart
       <template v-slot:right>
-        <el-button type="text" size="mini" @click="clearAll"
+        <el-button
+          id="id-button-clear-all"
+          type="text"
+          size="mini"
+          @click="clearAll"
           >Clear All</el-button
         >
       </template>
     </Title>
 
-    <div class="pos-cart__empty mx-3" v-if="!hasProducts">
+    <div id="id-card-empty" class="pos-cart__empty mx-3" v-if="!hasProducts">
       <i class="el-icon-receiving"></i>
       <span>
         Cart is empty.
       </span>
     </div>
 
-    <smooth-scrollbar class="pos-cart__products px-3" v-else>
+    <smooth-scrollbar class="pos-cart__products px-3" id="id-products" v-else>
       <div style="min-height: 10px;">
         <div v-for="(product, index) in products" :key="product.id">
           <div class="pos-cart__divider" v-if="index > 0"></div>
@@ -26,21 +30,28 @@
     </smooth-scrollbar>
 
     <div class="pos-cart__action p-3 pt-4">
-      <div class="pos-cart__total mb-3" v-if="hasProducts">
+      <div class="pos-cart__total mb-3" v-if="hasProducts" id="id-summary">
         <div class="d-flex">
           <div>Subtotal :</div>
-          <div class="ml-auto">{{ summary.subtotal | price }}</div>
+          <div class="ml-auto" id="id-summary-subtotal">
+            {{ summary.subtotal | price }}
+          </div>
         </div>
         <div class="d-flex">
           <div>Discount :</div>
-          <div class="ml-auto">{{ summary.discount | price }}</div>
+          <div class="ml-auto" id="id-summary-discount">
+            {{ summary.discount | price }}
+          </div>
         </div>
         <div class="d-flex">
           <div>Total :</div>
-          <div class="ml-auto">{{ summary.total | price }}</div>
+          <div class="ml-auto" id="id-summary-total">
+            {{ summary.total | price }}
+          </div>
         </div>
       </div>
       <el-button
+        id="id-button-process-order"
         type="primary"
         class="mt-auto w-100"
         :disabled="!hasProducts"
@@ -52,7 +63,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 import CartItem from "@/components/CartItem";
 import Title from "@/components/Title";
 export default {
@@ -60,7 +71,6 @@ export default {
   components: { Title, CartItem },
   computed: {
     ...mapGetters({
-      loading: "loadingProducts",
       products: "cartProducts",
       summary: "summary"
     }),

@@ -8,7 +8,7 @@
     >
       <el-form-item class="" label="Get Money" prop="money">
         <el-input
-          class="pos-order-clearing__input"
+          class="pos-order-clearing__input id-input-money"
           type="text"
           v-model="getMoney"
           autocomplete="off"
@@ -17,7 +17,7 @@
       </el-form-item>
       <el-form-item class="m-0" label="Change" prop="change">
         <el-input
-          class="pos-order-clearing__input"
+          class="pos-order-clearing__input id-input-change"
           type="text"
           v-model="change"
           autocomplete="off"
@@ -27,8 +27,15 @@
     </el-form>
 
     <span class="d-flex justify-content-end mt-5">
-      <el-button @click="$emit('cancel')">Back</el-button>
-      <el-button @click="$emit('submit')" type="primary">Finish</el-button>
+      <el-button class="id-button-cancel" @click="$emit('cancel')"
+        >Back</el-button
+      >
+      <el-button
+        class="id-button-submit"
+        @click="$emit('submit')"
+        type="primary"
+        >Finish</el-button
+      >
     </span>
   </div>
 </template>
