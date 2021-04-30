@@ -10,7 +10,7 @@ Support minimum screen width 1050px
 
 [Cashier Screen](https://line-pos-ad514.web.app/)
 
-[Customer Screen](https://line-pos-ad514.web.app/)
+[Customer Screen](https://line-pos-ad514.web.app/customer)
 
 
 ## Built With
